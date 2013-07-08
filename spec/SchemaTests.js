@@ -21,8 +21,12 @@ describe('My Library Schema',function() {
   it('has the book info layout for ISBN number',function() {
     verifySchemaProperty('ISBN','String');
   });
+
+  it('has the book info layout for Subject',function() {
+    verifySchemaProperty('Subject','String');
+  });
   var verifySchemaProperty = function(property, type) {
     librarySchema.paths.should.have.property(property);
-    //librarySchema.paths[property].instance.should.equal(type);
+    librarySchema.paths[property].instance.should.equal(type);
   };
 });
