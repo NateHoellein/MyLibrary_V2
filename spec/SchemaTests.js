@@ -17,8 +17,12 @@ describe('My Library Schema',function() {
   it('has the book info layout for Author',function() {
     verifySchemaProperty('Author','String');
   });
+
+  it('has the book info layout for ISBN number',function() {
+    verifySchemaProperty('ISBN','String');
+  });
   var verifySchemaProperty = function(property, type) {
-    librarySchema.paths.hasOwnProperty(property);
-    librarySchema.paths[property].instance.should.equal(type);
+    librarySchema.paths.should.have.property(property);
+    //librarySchema.paths[property].instance.should.equal(type);
   };
 });
