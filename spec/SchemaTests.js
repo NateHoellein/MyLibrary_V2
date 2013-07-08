@@ -25,6 +25,10 @@ describe('My Library Schema',function() {
   it('has the book info layout for Subject',function() {
     verifySchemaProperty('Subject','String');
   });
+
+  it('has the book info layout for Location',function() {
+    verifySchemaProperty('Location','String');
+  });
   var verifySchemaProperty = function(property, type) {
     librarySchema.paths.should.have.property(property);
     librarySchema.paths[property].instance.should.equal(type);
