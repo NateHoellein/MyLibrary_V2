@@ -5,6 +5,8 @@
   , "dependencies": {
       "express": "latest",
       "mongoose": "latest",
-      "mocha": "latest"
+      "mocha": "latest",
+      "should": "latest",
+      "libxmljs": "latest"
   }
 }
