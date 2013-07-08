@@ -10,10 +10,13 @@ describe('My Library Schema',function() {
     
     });
 
-  it('has the book info layout',function() {
+  it('has the book info layout for Title',function() {
     verifySchemaProperty('Title','String');
   });
 
+  it('has the book info layout for Author',function() {
+    verifySchemaProperty('Author','String');
+  });
   var verifySchemaProperty = function(property, type) {
     librarySchema.paths.hasOwnProperty(property);
     librarySchema.paths[property].instance.should.equal(type);
