@@ -1,0 +1,10 @@
+{
+    "name": "My_Library_on_the_mean_stack"
+  , "version": "0.1.0"
+  , "private": true
+  , "dependencies": {
+      "express": "latest",
+      "mongoose": "latest",
+      "mocha": "latest"
+  }
+}
