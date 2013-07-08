@@ -8,29 +8,40 @@ describe('My Library Schema',function() {
   before(function() {
     librarySchema = bookSchema();
     
-    });
+  });
 
   it('has the book info layout for Title',function() {
-    verifySchemaProperty('Title','String');
+    verifySchemaProperty('Title', stringType);
   });
 
   it('has the book info layout for Author',function() {
-    verifySchemaProperty('Author','String');
+    verifySchemaProperty('Author',stringType);
   });
 
   it('has the book info layout for ISBN number',function() {
-    verifySchemaProperty('ISBN','String');
+    verifySchemaProperty('ISBN',stringType);
   });
 
   it('has the book info layout for Subject',function() {
-    verifySchemaProperty('Subject','String');
+    verifySchemaProperty('Subject',stringType);
   });
 
   it('has the book info layout for Location',function() {
-    verifySchemaProperty('Location','String');
+    verifySchemaProperty('Location',stringType);
   });
-  var verifySchemaProperty = function(property, type) {
+
+  it('has the book info layout for LoanedOut',function() {
+    verifySchemaProperty('LoanedOut',function() {
+      return librarySchema.paths['LoanedOut'].defaultValue.should.be.false; 
+    });
+  });
+
+  var stringType = function(property) {
+    librarySchema.paths[property].instance.should.equal('String'); 
+  };
+
+  var verifySchemaProperty = function(property, typeAssert) {
     librarySchema.paths.should.have.property(property);
-    librarySchema.paths[property].instance.should.equal(type);
+    typeAssert(property);
   };
 });
