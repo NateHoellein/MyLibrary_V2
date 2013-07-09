@@ -1,8 +1,4 @@
-
-/*
- * GET home page.
- */
-
-exports.index = function(req, res){
-  res.render('index', { title: 'Express' })
+module.exports = function(app) {
+  require('./main.js')(app);
+  require('./library.js')(app);
 };
