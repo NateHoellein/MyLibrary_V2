@@ -23,4 +23,19 @@ describe('My library routes', function() {
         done();
       });
   });
+
+  it('adds a book; /api/Library',function(done) {
+    request(app)
+      .post('/api/Library')
+      .set('Accept','application/json')
+      .expect(201)
+      .expect('Content-type', /json/)
+      .end(function(err, response) {
+        if(err) {
+          return done(err);
+        }
+        done();
+      });
+  });
+  
 });
