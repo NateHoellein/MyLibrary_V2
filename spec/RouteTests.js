@@ -51,5 +51,18 @@ describe('My library routes', function() {
         done();
       });
   });
+
+  it('get\'s a books details; /api/BookInfo',function(done) {
+    request(app)
+      .get('/api/BookInfo')
+      .expect(200)
+      .expect('Content-type', /json/)
+      .end(function(err, response) {
+        if(err) {
+          return done(err);
+        }
+        done();
+      });
+  });
    
 });
