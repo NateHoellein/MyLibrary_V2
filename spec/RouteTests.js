@@ -30,7 +30,7 @@ describe('My library routes', function() {
       .get('/api/Library')
       .set('Accept','application/json')
       .expect(200)
-      .expect('Content-type', /json/)
+      .expect('Content-type', /application\/json/)
       .end(function(err, response) {
         if(err) {
           return done(err);
@@ -44,19 +44,24 @@ describe('My library routes', function() {
   });
 
   it('adds a book; /api/Library',function(done) {
-    var libraryspy = sinon.stub(libController,'addbook').returns({'Title':'Some Title'});
+    var newBook = {
+      Title: 'Some Title',
+      Author: 'Me!'
+    };
+    var libraryspy = sinon.stub(libController,'addbook').returns(newBook);
     request(app)
       .post('/api/Library')
       .set('Accept','application/json')
-      .set('Body',{Title: 'Some Title',Author:'Me'})
+      .set('Body',newBook)
       .expect(201)
-      .expect('Content-type', /json/)
+      .expect('Content-type', /application\/json/)
       .end(function(err, response) {
         if(err) {
           return done(err);
         }
         libController.addbook.calledOnce.should.be.true;
-
+        response.body.Title.should.equal('Some Title');
+        response.body.Author.should.equal('Me!');
         done();
       });
   });
