@@ -3,14 +3,29 @@ var should = require('should'),
   request = require('supertest'),
   express = require('express'),
   app = require('../app'),
-  routes = require('../routes');
+  routes = require('../routes'),
+  sinon = require('sinon'),
+  libraryController = require('../controllers/librarycontroller.js'); 
 
-app = express();
-routes(app);
+
 
 describe('My library routes', function() {
+  var libController;
+
+  before(function() {
+    libController = new libraryController();
+    app = express();
+  });
+
+  after(function() {
+
+  });
 
   it('for all books; /api/Library',function(done) {
+    
+    var libraryspy = sinon.stub(libController,'getAllBooks').returns({'Title':'arrgghhhh!'});
+    routes(app, libController);
+    
     request(app)
       .get('/api/Library')
       .set('Accept','application/json')
@@ -20,6 +35,10 @@ describe('My library routes', function() {
         if(err) {
           return done(err);
         }
+         
+        libController.getAllBooks.calledOnce.should.be.true; 
+        var body = response.body;
+        body.Title.should.equal('arrgghhhh!');
         done();
       });
   });
@@ -64,5 +83,4 @@ describe('My library routes', function() {
         done();
       });
   });
-   
 });
