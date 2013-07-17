@@ -67,6 +67,11 @@ describe('My library routes', function() {
   });
 
   it('updates a book; /api/Library',function(done) {
+    var newBook = {
+      Title: 'Some Title',
+      Author: 'Me!'
+    };
+    var libraryspy = sinon.stub(libController,'updatebook').returns(newBook);
     request(app)
       .put('/api/Library')
       .set('Accept','application/json')
@@ -76,6 +81,7 @@ describe('My library routes', function() {
         if(err) {
           return done(err);
         }
+        libController.updatebook.calledOnce.should.be.true;
         done();
       });
   });

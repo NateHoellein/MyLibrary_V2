@@ -3,9 +3,12 @@ var libraryController =  function() {
   }; 
   var getBooks = function() {
   };
+  var updateBook = function() {
+  };
   return {
     addbook: addBook,
-    getAllBooks: getBooks
+    getAllBooks: getBooks,
+    updatebook: updateBook
   };
 };
 
