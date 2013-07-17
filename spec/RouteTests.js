@@ -15,6 +15,7 @@ describe('My library routes', function() {
   before(function() {
     libController = new libraryController();
     app = express();
+    routes(app, libController);
   });
 
   after(function() {
@@ -24,7 +25,6 @@ describe('My library routes', function() {
   it('for all books; /api/Library',function(done) {
     
     var libraryspy = sinon.stub(libController,'getAllBooks').returns({'Title':'arrgghhhh!'});
-    routes(app, libController);
     
     request(app)
       .get('/api/Library')
@@ -44,15 +44,19 @@ describe('My library routes', function() {
   });
 
   it('adds a book; /api/Library',function(done) {
+    var libraryspy = sinon.stub(libController,'addbook').returns({'Title':'Some Title'});
     request(app)
       .post('/api/Library')
       .set('Accept','application/json')
+      .set('Body',{Title: 'Some Title',Author:'Me'})
       .expect(201)
       .expect('Content-type', /json/)
       .end(function(err, response) {
         if(err) {
           return done(err);
         }
+        libController.addbook.calledOnce.should.be.true;
+
         done();
       });
   });
