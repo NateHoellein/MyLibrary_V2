@@ -13,8 +13,8 @@ module.exports = function(app,controller) {
   });
 
   app.put('/api/Library',function(req, res) {
-    controller.updatebook();
-    res.set({'Content-type':'applicaiton/json'});
-    res.send(201);
+    var updatedBook = controller.updatebook();
+    res.set({'Content-type':'application/json'});
+    res.send(201, updatedBook);
   });
 };

@@ -76,12 +76,14 @@ describe('My library routes', function() {
       .put('/api/Library')
       .set('Accept','application/json')
       .expect(201)
-      .expect('Content-type', /json/)
+      .expect('Content-type', /application\/json/)
       .end(function(err, response) {
         if(err) {
           return done(err);
         }
         libController.updatebook.calledOnce.should.be.true;
+        response.body.Title.should.be.equal('Some Title');
+        response.body.Author.should.be.equal('Me!');
         done();
       });
   });
