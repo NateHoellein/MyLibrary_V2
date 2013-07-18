@@ -5,7 +5,7 @@ var should = require('should'),
   app = require('../app'),
   routes = require('../routes'),
   sinon = require('sinon'),
-  libraryController = require('../controllers/librarycontroller.js'); 
+  bookinfoController = require('../controllers/bookinfocontroller.js'); 
 
 describe('BookInfo Routes', function() {
   it('get\'s a books details; /api/BookInfo',function(done) {
