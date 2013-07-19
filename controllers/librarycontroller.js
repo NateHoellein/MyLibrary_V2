@@ -7,7 +7,7 @@ var libraryController =  function() {
   };
   return {
     addbook: addBook,
-    getAllBooks: getBooks,
+    getallbooks: getBooks,
     updatebook: updateBook
   };
 };

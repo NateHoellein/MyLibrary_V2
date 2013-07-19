@@ -1,7 +1,7 @@
 
 module.exports = function(app,controller) {
   app.get('/api/Library',function(req, res) {
-    var books = controller.getAllBooks();
+    var books = controller.getallbooks();
     res.set({'Content-type':'application/json'});
     res.send(200,books);
   });

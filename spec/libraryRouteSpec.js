@@ -24,7 +24,7 @@ describe('My library routes', function() {
 
   it('for all books; /api/Library',function(done) {
     
-    var libraryspy = sinon.stub(libController,'getAllBooks').returns({'Title':'arrgghhhh!'});
+    var libraryspy = sinon.stub(libController,'getallbooks').returns({'Title':'arrgghhhh!'});
     
     request(app)
       .get('/api/Library')
@@ -35,8 +35,7 @@ describe('My library routes', function() {
         if(err) {
           return done(err);
         }
-         
-        libController.getAllBooks.calledOnce.should.be.true; 
+        libController.getallbooks.calledOnce.should.be.true; 
         var body = response.body;
         body.Title.should.equal('arrgghhhh!');
         done();
@@ -88,16 +87,4 @@ describe('My library routes', function() {
       });
   });
 
-  it('get\'s a books details; /api/BookInfo',function(done) {
-    request(app)
-      .get('/api/BookInfo')
-      .expect(200)
-      .expect('Content-type', /json/)
-      .end(function(err, response) {
-        if(err) {
-          return done(err);
-        }
-        done();
-      });
-  });
 });
