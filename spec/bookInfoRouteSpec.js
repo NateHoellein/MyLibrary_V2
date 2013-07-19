@@ -8,6 +8,7 @@ var should = require('should'),
   bookinfoController = require('../controllers/bookinfocontroller.js'); 
 
 describe('BookInfo Routes', function() {
+  var infoController = new bookinfoController();
   it('get\'s a books details; /api/BookInfo',function(done) {
     app = express();
     routes(app);
