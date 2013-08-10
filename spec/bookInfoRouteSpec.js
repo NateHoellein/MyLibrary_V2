@@ -8,18 +8,21 @@ var should = require('should'),
   bookinfoController = require('../controllers/bookinfocontroller.js'); 
 
 describe('BookInfo Routes', function() {
-  var infoController = new bookinfoController();
-  var bookSpy = sinon.stub(infoController, 'getbookinfo').returns({Title:'I found you'});
+  var infoController;
+  var bookSpy;
 
   before(function() {
+    infoController = new bookinfoController();
     app = express();
     routes(app,infoController);
   });
 
-  after(function() {
-
+  afterEach(function() {
+    infoController.getbookinfo.restore();
   });
-  it('get\'s a books details; /api/BookInfo',function(done) {
+
+  it('get\'s a books details; /api/BookInfo/ISBN-NUMBER',function(done) {
+    bookSpy = sinon.stub(infoController, 'getbookinfo').returns({Title:'I found you'});
     request(app)
       .get('/api/BookInfo/some-isbn-number')
       .expect(200)
@@ -35,4 +38,19 @@ describe('BookInfo Routes', function() {
       });
   });
 
+  it('returns a 422 when requested with no parameter; /api/BookInfo',function(done) {
+    bookSpy = sinon.stub(infoController, 'getbookinfo');
+    request(app)
+      .get('/api/BookInfo')
+      .expect(422)
+      .expect('Content-type', /application\/json/)
+      .end(function(err, response) {
+        if(err) {
+          return done(err);
+        }
+        infoController.getbookinfo.calledOnce.should.be.false; 
+        response.body.Message.should.be.equal('Calls to /api/BookInfo require an isbn number. See /profile.');
+        done();
+      });
+    });
 });
