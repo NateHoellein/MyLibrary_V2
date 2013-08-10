@@ -7,8 +7,6 @@ var should = require('should'),
   sinon = require('sinon'),
   libraryController = require('../controllers/librarycontroller.js'); 
 
-
-
 describe('My library routes', function() {
   var libController;
 

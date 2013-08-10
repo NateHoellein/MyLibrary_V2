@@ -14,7 +14,7 @@ describe('BookInfo Routes', function() {
     app = express();
     routes(app,infoController);
     request(app)
-      .get('/api/BookInfo')
+      .get('/api/BookInfo/some-isbn-number')
       .expect(200)
       .expect('Content-type', /application\/json/)
       .end(function(err, response) {
@@ -22,6 +22,7 @@ describe('BookInfo Routes', function() {
           return done(err);
         }
         infoController.getbookinfo.calledOnce.should.be.true; 
+        infoController.getbookinfo.calledWith('some-isbn-number').should.be.true;
         response.body.Title.should.be.equal('I found you');
         done();
       });
