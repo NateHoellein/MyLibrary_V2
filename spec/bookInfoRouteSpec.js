@@ -53,4 +53,21 @@ describe('BookInfo Routes', function() {
         done();
       });
     });
+
+  it('looks for the right format for a 13 digit isbn number; /api/BookInfo',function(done) {
+    bookSpy = sinon.stub(infoController, 'getbookinfo').returns({Title:'I found you'});
+    request(app)
+      .get('/api/BookInfo/1-123-12345-1')
+      .expect(200)
+      .expect('Content-type', /application\/json/)
+      .end(function(err, response) {
+        if(err) {
+          return done(err);
+        }
+        infoController.getbookinfo.calledOnce.should.be.true; 
+        infoController.getbookinfo.calledWith('1-123-12345-1').should.be.true; 
+        response.body.Title.should.be.equal('I found you');
+        done();
+      });
+    });
 });
