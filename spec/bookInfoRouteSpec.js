@@ -21,23 +21,6 @@ describe('BookInfo Routes', function() {
     infoController.getbookinfo.restore();
   });
 
-  it('get\'s a books details; /api/BookInfo/ISBN-NUMBER',function(done) {
-    bookSpy = sinon.stub(infoController, 'getbookinfo').returns({Title:'I found you'});
-    request(app)
-      .get('/api/BookInfo/some-isbn-number')
-      .expect(200)
-      .expect('Content-type', /application\/json/)
-      .end(function(err, response) {
-        if(err) {
-          return done(err);
-        }
-        infoController.getbookinfo.calledOnce.should.be.true; 
-        infoController.getbookinfo.calledWith('some-isbn-number').should.be.true; 
-        response.body.Title.should.be.equal('I found you');
-        done();
-      });
-  });
-
   it('returns a 422 when requested with no parameter; /api/BookInfo',function(done) {
     bookSpy = sinon.stub(infoController, 'getbookinfo');
     request(app)
@@ -67,6 +50,22 @@ describe('BookInfo Routes', function() {
         infoController.getbookinfo.calledOnce.should.be.true; 
         infoController.getbookinfo.calledWith('1-123-12345-1').should.be.true; 
         response.body.Title.should.be.equal('I found you');
+        done();
+      });
+    });
+
+  it('returns a 422 when ISBN not in right format; /api/BookInfo',function(done) {
+    bookSpy = sinon.stub(infoController, 'getbookinfo').returns({Title:'I found you'});
+    request(app)
+      .get('/api/BookInfo/1-1R-123045-10')
+      .expect(422)
+      .expect('Content-type', /application\/json/)
+      .end(function(err, response) {
+        if(err) {
+          return done(err);
+        }
+        infoController.getbookinfo.calledOnce.should.be.false; 
+        response.body.Message.should.be.equal('ISBN number is in the incorrect format.');
         done();
       });
     });
