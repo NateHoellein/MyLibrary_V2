@@ -69,4 +69,21 @@ describe('BookInfo Routes', function() {
         done();
       });
     });
+
+  it('accepts 10 digit isbn number; /api/BookInfo',function(done) {
+    bookSpy = sinon.stub(infoController, 'getbookinfo').returns({Title:'I found you'});
+    request(app)
+      .get('/api/BookInfo/123456789-0')
+      .expect(200)
+      .expect('Content-type', /application\/json/)
+      .end(function(err, response) {
+        if(err) {
+          return done(err);
+        }
+        infoController.getbookinfo.calledOnce.should.be.true; 
+        infoController.getbookinfo.calledWith('123456789-0').should.be.true; 
+        response.body.Title.should.be.equal('I found you');
+        done();
+      });
+    });
 });
