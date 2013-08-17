@@ -5,10 +5,13 @@ var libraryController =  function() {
   };
   var updateBook = function() {
   };
+  var deleteBook = function() {
+  };
   return {
     addbook: addBook,
     getallbooks: getBooks,
-    updatebook: updateBook
+    updatebook: updateBook,
+    deletebook: deleteBook
   };
 };
 

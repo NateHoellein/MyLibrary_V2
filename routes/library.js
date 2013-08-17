@@ -17,4 +17,9 @@ module.exports = function(app,controller) {
     res.set({'Content-type':'application/json'});
     res.send(201, updatedBook);
   });
+
+  app.delete('/api/Library',function(req, res) {
+    var deleteBook = controller.deletebook();
+    res.send(204);
+  });
 };

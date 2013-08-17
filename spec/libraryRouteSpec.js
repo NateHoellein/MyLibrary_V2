@@ -85,4 +85,23 @@ describe('My library routes', function() {
       });
   });
 
+  it('deletes a book; /api/Library',function(done) {
+    var newBook = {
+      Title: 'Some Title',
+      Author: 'Me!'
+    };
+    var libraryspy = sinon.stub(libController,'deletebook').returns(newBook);
+    request(app)
+      .del('/api/Library')
+      .set('Accept','application/json')
+      .set('Body',newBook)
+      .expect(204)
+      .end(function(err, response) {
+        if(err) {
+          return done(err);
+        }
+        libController.deletebook.calledOnce.should.be.true;
+        done();
+      });
+    });
 });
