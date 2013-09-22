@@ -1,5 +1,8 @@
-var libraryController =  function() {
+var libraryController =  function(dbcontroller) {
+  var db = dbcontroller;
   var addBook = function() {
+    var bookId = db.addnewbook();
+    return bookId;
   }; 
   var getBooks = function() {
   };
