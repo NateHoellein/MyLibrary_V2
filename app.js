@@ -7,7 +7,6 @@ var express = require('express'),
   routes = require('./routes');
 
 var app = express();
-routes(app);
 
 // Configuration
 
@@ -27,6 +26,8 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
+
+routes(app);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);

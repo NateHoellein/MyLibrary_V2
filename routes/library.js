@@ -7,7 +7,7 @@ module.exports = function(app,controller) {
   });
 
   app.post('/api/Library',function(req, res) {
-    var newBook = controller.addbook();
+    var newBook = controller.addbook(req.body);
     res.set({'Content-type':'application/json'});
     res.send(201,newBook);
   });

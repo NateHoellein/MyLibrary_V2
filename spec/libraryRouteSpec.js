@@ -13,6 +13,9 @@ describe('My library routes', function() {
   before(function() {
     libController = new libraryController();
     app = express();
+    app.configure(function(){
+      app.use(express.bodyParser());
+    });
     routes(app, libController);
   });
 
@@ -49,7 +52,7 @@ describe('My library routes', function() {
     request(app)
       .post('/api/Library')
       .set('Accept','application/json')
-      .set('Body',newBook)
+      .send(newBook)
       .expect(201)
       .expect('Content-type', /application\/json/)
       .end(function(err, response) {
@@ -57,6 +60,7 @@ describe('My library routes', function() {
           return done(err);
         }
         libController.addbook.calledOnce.should.be.true;
+        libraryspy.calledWithMatch(newBook).should.be.true;
         response.body.Title.should.equal('Some Title');
         response.body.Author.should.equal('Me!');
         done();
