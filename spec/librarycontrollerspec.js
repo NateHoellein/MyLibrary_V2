@@ -2,10 +2,16 @@ var libraryController = require('../controllers/libraryController'),
   dbcontroller = require('../controllers/dbcontroller.js'); 
   sinon = require('sinon');
 
+
 describe('Library Controller', function() {
+  var db,controller;
+
+  before(function() {
+    db = new dbcontroller();
+    controller = new libraryController(db);
+  });
+
   it('sends the book to the db controller', function() {
-    var db = new dbcontroller();
-    var controller = new libraryController(db);
     var myBook = {
       Title: "Yay",
       Author: "me"
@@ -18,4 +24,5 @@ describe('Library Controller', function() {
     db.addnewbook.called.should.be.true;
     id.should.equal('mongo DB ID');
   });
+
 });

@@ -44,15 +44,17 @@ describe('My library routes', function() {
   });
 
   it('adds a book; /api/Library',function(done) {
-    var newBook = {
+    var newBookRequest = {
       Title: 'Some Title',
       Author: 'Me!'
     };
+    var newBook = newBookRequest;
+    newBook.Id = 123456;
     var libraryspy = sinon.stub(libController,'addbook').returns(newBook);
     request(app)
       .post('/api/Library')
       .set('Accept','application/json')
-      .send(newBook)
+      .send(newBookRequest)
       .expect(201)
       .expect('Content-type', /application\/json/)
       .end(function(err, response) {
@@ -60,9 +62,11 @@ describe('My library routes', function() {
           return done(err);
         }
         libController.addbook.calledOnce.should.be.true;
-        libraryspy.calledWithMatch(newBook).should.be.true;
-        response.body.Title.should.equal('Some Title');
-        response.body.Author.should.equal('Me!');
+        libraryspy.calledWithMatch(newBookRequest).should.be.true;
+        response.body.Title.should.equal("Some Title");
+        response.body.Author.should.equal("Me!");
+        response.body.Id.should.equal(123456);
+        response.headers["location"].should.be.equal('/api/Library/123456');
         done();
       });
   });
